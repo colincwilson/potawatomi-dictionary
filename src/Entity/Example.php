@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups": {"example:read"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ExampleRepository")
  */
 class Example
@@ -20,12 +23,14 @@ class Example
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"word:read","example:read", "word:write"})
      */
     private $sentence;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Word", inversedBy="examples")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"example:read"})
      */
     private $word;
 

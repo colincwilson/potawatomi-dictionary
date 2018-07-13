@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups": {"word:read"}},
+ *  denormalizationContext={"groups": {"word:write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\WordRepository")
  */
 class Word
@@ -22,21 +26,25 @@ class Word
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"word:read", "word:write"})
      */
     private $word;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"word:read", "word:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"word:read", "word:write"})
      */
     private $speechPart;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Example", mappedBy="word", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Groups({"word:read", "word:write"})
      */
     private $examples;
 
@@ -89,7 +97,7 @@ class Word
     /**
      * @return Collection|Example[]
      */
-    public function getExamples(): iterable
+    public function getExamples(): Collection
     {
         return $this->examples;
     }
