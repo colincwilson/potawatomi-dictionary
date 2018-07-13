@@ -70,14 +70,14 @@ class Word
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDefinition(): ?string
     {
-        return $this->description;
+        return $this->definition;
     }
 
-    public function setDescription(string $description): self
+    public function setDefinition(string $definition): self
     {
-        $this->description = $description;
+        $this->definition = $definition;
 
         return $this;
     }
